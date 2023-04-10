@@ -1,0 +1,23 @@
+{
+  "name": "notionapi01",
+  "version": "0.0.1",
+  "description": "using notion api to add page daily to day database",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "local-run": "node -r dotenv/config src/index.js dotenv_config_path=.env"
+  },
+  "keywords": [
+    "notion",
+    "notionapi"
+  ],
+  "author": "Chinmay",
+  "license": "ISC",
+  "devDependencies": {
+    "dotenv": "^16.0.3"
+  },
+  "dependencies": {
+    "@notionhq/client": "^2.2.3"
+  }
+}
