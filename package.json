@@ -5,9 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "local-run": "node -r dotenv/config src/index.js dotenv_config_path=.env",
-    "date-test":"node -r dotenv/config src/addDays.js dotenv_config_path=.env"
+    "start": "node -r dotenv/config src/index.js dotenv_config_path=.env "
   },
   "keywords": [
     "notion",
@@ -15,11 +13,9 @@
   ],
   "author": "Chinmay",
   "license": "ISC",
-  "devDependencies": {
-    "dotenv": "^16.0.3"
-  },
   "dependencies": {
-    "@notionhq/client": "^2.2.3",
-    "dates-between": "^5.0.0"
+    "@notionhq/client": "^2.2.15",
+    "dates-between": "^5.2.1",
+    "dotenv": "^16.4.5"
   }
 }
