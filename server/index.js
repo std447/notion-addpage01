@@ -14,10 +14,6 @@ const databaseID = process.env.NDB_DAYS;
 const WEEK = ["Sunday", "Monday", "Tueday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-
-// console.log("title ", formattedDate)
-
-
 //---> Edit dates here <---
 dates("2024-08-01", "2024-08-31").forEach((date, count) => {
   setTimeout(async () => {
@@ -38,10 +34,10 @@ function dates(start, end) {
 }
 
 /**
- * 
  * @param {Date} date 
  */
 async function addPage(date) {
+  // Create page title in dd MMM'YY (ddd) format. ex output 10 Aug'24 (Sat)
   const fDate = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
   const month = MONTHS[date.getMonth()].slice(0, 3);
   const weekDay = WEEK[date.getDay()].slice(0, 3);
