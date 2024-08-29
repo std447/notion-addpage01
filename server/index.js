@@ -11,21 +11,15 @@ const datesBetween = require('dates-between');
 const notion = new Client({ auth: process.env.NOTION_KEY });
 const databaseID = process.env.NDB_DAYS;
 
-const title = (input) => {
-  const date = new Date(input);
-  const WEEK = ["Sunday", "Monday", "Tueday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const WEEK = ["Sunday", "Monday", "Tueday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-  const fDate = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
-  const month = MONTHS[date.getMonth()].slice(0, 3);
-  const weekDay = WEEK[date.getDay()].slice(0, 3);
-  const year = date.getFullYear().toString().slice(2);
-  const formattedDate = `${fDate} ${month}'${year} (${weekDay})`;
-  // console.log("title ", formattedDate)
-  return formattedDate;
-}
+
+// console.log("title ", formattedDate)
+
+
 //---> Edit dates here <---
-dates("8/1/24", "8/31/24").forEach((date, count) => {
+dates("2024-08-01", "2024-08-31").forEach((date, count) => {
   setTimeout(async () => {
     if (!isDate(date)) return;
     addPage(date);
@@ -48,21 +42,26 @@ function dates(start, end) {
  * @param {Date} date 
  */
 async function addPage(date) {
+  const fDate = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+  const month = MONTHS[date.getMonth()].slice(0, 3);
+  const weekDay = WEEK[date.getDay()].slice(0, 3);
+  const year = date.getFullYear().toString().slice(2);
+  const title = `${fDate} ${month}'${year} (${weekDay})`;
   // check if page already exist
   const page = await notion.databases.query({
     database_id: databaseID,
     filter: {
       "property": "Day",
       "rich_text": {
-        "contains": title(date)
+        "contains": title
       }
     },
   });
 
   if (page.results.length == 1) {
-    console.log(`Page ${title(date)} already exists`)
+    console.log(`Page ${title} already exists`)
   } else {
-    console.log(`Adding ${title(date)} ...`)
+    console.log(`Adding ${title} ...`)
     try {
       const response = await notion.pages.create({
         parent: { database_id: databaseID },
@@ -75,7 +74,7 @@ async function addPage(date) {
             title: [
               {
                 "text": {
-                  "content": title(date),
+                  "content": title,
                 }
               }
             ]
@@ -87,7 +86,7 @@ async function addPage(date) {
           }
         }
       });
-      console.log(`Success!!! ${title(date)} page created. Its url is:${response.url}`);
+      console.log(`Success!!! ${title} page created. Its url is:${response.url}`);
     } catch (error) {
       console.log(`Error: ${error.code}, Status: ${error.status}`, "\n", error.message);
     }
